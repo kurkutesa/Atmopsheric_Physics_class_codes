@@ -29,7 +29,7 @@ level_option = 50000 # Pascals; set to -1 for sea level pressure
 
 # Now provide the path to the directory containing the .nc file. Please note,
 # do NOT include the .nc file in the path.
-fpath = '/home/pmarsh/metr4424/lab01/data'
+fpath = '/home/sopan/Desktop/Atmospheric_physics/lab01/data'
 
 
 
