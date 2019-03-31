@@ -8,7 +8,7 @@
 
 import netCDF4
 
-sys.path.append("/Users/scavallo/scripts/python_scripts")
+sys.path.append("/Users/sopan/scripts/Atmospheric_physics/python_scripts")
 from weather_modules import *
 from utilities_modules import *
 
@@ -20,8 +20,8 @@ from mpl_toolkits.basemap import Basemap, shiftgrid
 
 # <codecell>
 
-fpath = "/Users/scavallo/data/gfs.t00z.pgrbf00_2012080900_f000.nc"
-level_option = 100000 # Pascals 
+fpath = "/Users/sopan/scripts/Atmospheric_physics/data/gfs.t00z.pgrbf00_2012080900_f000.nc"
+level_option = 100000 # Pascals
 
 # <codecell>
 
@@ -31,18 +31,18 @@ f = netCDF4.Dataset(fpath,'r')
 # <codecell>
 
 # Read in select netcdf variables and close the file
-lons = f.variables['lon_0'][:] 
+lons = f.variables['lon_0'][:]
 lats = f.variables['lat_0'][::-1] # Must read latitudes in reverse direction
-levs = f.variables['lv_ISBL0'][:] 
+levs = f.variables['lv_ISBL0'][:]
 temperature = f.variables['TMP_P0_L100_GLL0'][:]
 u = f.variables['UGRD_P0_L100_GLL0'][:]
 v = f.variables['VGRD_P0_L100_GLL0'][:]
-f.close  
+f.close
 
 # <codecell>
 
 # Compute the gradients on a sphere
-dfdp,dfdlat,dfdlon = gradient_sphere(temperature, levs, lats, lons)        
+dfdp,dfdlat,dfdlon = gradient_sphere(temperature, levs, lats, lons)
 
 # Compute temperature advection
 temperature_advection = -1*u*dfdlon + -1*v*dfdlat
@@ -81,13 +81,13 @@ clevs = np.arange(-40,41,5) # Contours from -40 to 40 with a contour interval of
 
 temperature_plot = temperature_plot - 273.15 # Plot in degrees Celsius
 
-fig = plt.figure(**figprops)   # New figure   
+fig = plt.figure(**figprops)   # New figure
 ax1 = fig.add_axes([0.1,0.1,0.8,0.8])
-    
+
 map = Basemap(llcrnrlon=-125.5,llcrnrlat=15.,urcrnrlon=-30.,urcrnrlat=50.352,\
             rsphere=(6378137.00,6356752.3142),\
             resolution='l',area_thresh=1000.,projection='lcc',\
-            lat_1=50.,lon_0=-107.,ax=ax1)	       
+            lat_1=50.,lon_0=-107.,ax=ax1)
 map.drawcoastlines(linewidth=2, color='#444444', zorder=6)
 map.drawcountries(linewidth=1, color='#444444', zorder=5)
 map.drawstates(linewidth=0.66, color='#444444', zorder=4)
@@ -112,12 +112,12 @@ ax1.set_title(str(levelh)+' hPa temperature and wind barbs')
 
 # Temperature advection plot
 cbar_min = -0.0001
-cbar_max = 0.0001   
-cfint = 0.00001    
+cbar_max = 0.0001
+cfint = 0.00001
 cflevs = np.arange(cbar_min,cbar_max+cfint-(cfint/2),cfint)
 ncolors = np.size(cflevs)-1
 cmap = cm.get_cmap('jet')
-djet = cmap_whitezero(cmap,ncolors,1,-1)    
+djet = cmap_whitezero(cmap,ncolors,1,-1)
 
 
 plt.clf()
@@ -126,7 +126,7 @@ ax1 = fig.add_axes([0.1,0.1,0.8,0.8])
 map = Basemap(llcrnrlon=-125.5,llcrnrlat=15.,urcrnrlon=-30.,urcrnrlat=50.352,\
             rsphere=(6378137.00,6356752.3142),\
             resolution='l',area_thresh=1000.,projection='lcc',\
-            lat_1=50.,lon_0=-107.,ax = ax1)	       
+            lat_1=50.,lon_0=-107.,ax = ax1)
 map.drawcoastlines(linewidth=2, color='#444444', zorder=6)
 map.drawcountries(linewidth=1, color='#444444', zorder=5)
 map.drawstates(linewidth=0.66, color='#444444', zorder=4)

@@ -14,7 +14,7 @@ import os, datetime
 ###################################
 # Set user options
 ###################################
-fpath = '/home/scavallo/data'
+fpath = '/Users/sopan/scripts/Atmospheric_physics/data'
 date_string = '2011120700' # yyyymmddhh
 ###################################
 # END user options
